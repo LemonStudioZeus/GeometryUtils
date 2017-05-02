@@ -1,3 +1,4 @@
+//GeometryUtils
 (function(Export) {
     var GeometryUtils = Export.GeometryUtils || {};
     GeometryUtils.splitConnectComponent = function(geometry) {
@@ -88,7 +89,8 @@
 
             var _geometry = new Export.Geometry();
             var v_indexs = {};
-            for (var i = 0; i < face_set.face; i++) {
+            for (var i in face_set.faces) {
+                var face = face_set.faces[i];
                 v_indexs[face.a] = face.a;
                 v_indexs[face.b] = face.b;
                 v_indexs[face.c] = face.c;
@@ -97,17 +99,17 @@
             for (var index in v_indexs) {
                 var v = geometry.vertices[index];
                 v_indexs[index] = _geometry.vertices.length;
-                _geometry.vertices.push(v);
+                _geometry.vertices.push(v.clone());
             }
 
-            for (var i = 0; i < face_set.face; i++) {
-                var face = new Face3(v_indexs[face_set.face.a], v_indexs[face_set.face.b], v_indexs[face_set.face.c]);
-                _geometry.faces.push(face)
+            for (var i in face_set.faces) {
+                var face = face_set.faces[i];
+                var _face = new Export.Face3(v_indexs[face.a], v_indexs[face.b], v_indexs[face.c]);
+                _geometry.faces.push(_face)
 
             }
 
             return _geometry;
-
 
         }
 
